@@ -10,7 +10,35 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "cleanUrls": true,
+    "headers": [
+      {
+        "source": "/api/**",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json; charset=utf-8"
+          },
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET, POST, OPTIONS, PUT, DELETE, PATCH"
+          },
+          {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+          }
+        ]
+      }
+    ],
     "rewrites": [
+      {
+        "source": "/api/**",
+        "destination": "/api/fallback.json"
+      },
       {
         "source": "**",
         "destination": "/index.html"

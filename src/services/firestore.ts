@@ -109,8 +109,8 @@ export const firestoreService = {
       const caseDocRef = doc(firestore, 'cases', caseId);
       const snap = await getDoc(caseDocRef);
       if (snap.exists()) {
-        const data = snap.data() as LegalAnalysisResult & { userId?: string };
-        if (data.userId === user.uid || (data as any).user_id === user.uid) {
+        const data = snap.data() as LegalAnalysisResult & { userId?: string; user_id?: string };
+        if (data.userId === user.uid || data.user_id === user.uid) {
           return { ...data, id: snap.id };
         }
       }

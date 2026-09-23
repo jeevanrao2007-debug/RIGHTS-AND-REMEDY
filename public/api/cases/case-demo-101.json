@@ -1,0 +1,279 @@
+{
+  "id": "case-demo-101",
+  "title": "Withheld Security Deposit & Disputed Cleaning Deductions",
+  "createdAt": "2026-09-21T18:02:06.784Z",
+  "updatedAt": "2026-09-23T06:02:06.785Z",
+  "category": "Housing",
+  "primaryIssue": "Landlord withholding $1,800 deposit without itemized repair receipts",
+  "jurisdiction": {
+    "country": "United States",
+    "stateOrRegion": "California"
+  },
+  "originalNarrative": "I vacated my rental apartment on July 31 after giving 30 days notice. The landlord inspected the place with me and noted no damage. Now it is over 25 days later and they sent an email saying they are keeping the full $1,800 deposit for routine carpet shampooing and repainting without any receipts.",
+  "situationSummary": {
+    "coreFacts": [
+      "Tenant provided timely 30-day written notice before vacating.",
+      "A joint walkthrough inspection took place with no damage identified at move-out.",
+      "Landlord retained the complete $1,800 security deposit for painting and routine carpet cleaning.",
+      "More than 21 days have elapsed since surrender of the premises without an itemized statement or receipts."
+    ],
+    "keyLegalIssues": [
+      "Statutory deadline for return of security deposits (21 calendar days).",
+      "Prohibition on deducting for normal wear and tear under residential tenancy law.",
+      "Failure to supply itemized deductions and supporting contractor invoices or material receipts."
+    ],
+    "clarificationsProvided": [
+      "Tenant verified that move-in inspection photographs exist showing pre-existing minor carpet wear.",
+      "Move-out communication occurred in writing via email with dated timestamps."
+    ]
+  },
+  "potentiallyRelevantRights": [
+    {
+      "id": "right-1",
+      "title": "Right to Timely Return of Deposit or Itemized Deductions",
+      "plainLanguageExplanation": "In your jurisdiction, landlords must either refund the full security deposit or deliver an itemized written explanation of deductions within a strict statutory window.",
+      "whyRelevant": "Because 25 days have passed since you surrendered the premises and keys, the statutory 21-day timeline has lapsed.",
+      "supportingSource": {
+        "id": "src-ca-civ-1950",
+        "title": "California Civil Code § 1950.5 (Residential Tenancy Security Deposits)",
+        "authority": "California State Legislature",
+        "provision": "Cal. Civ. Code § 1950.5(g)(1)",
+        "dateOrVersion": "Current through 2024 Legislative Session",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5",
+        "sourceType": "statute",
+        "status": "statutory"
+      },
+      "sourceStatus": "statutory"
+    },
+    {
+      "id": "right-2",
+      "title": "Protection Against Deductions for Normal Wear and Tear",
+      "plainLanguageExplanation": "Landlords cannot charge tenants for ordinary deterioration resulting from everyday, reasonable habitation, such as minor carpet traffic marks or minor paint scuffs.",
+      "whyRelevant": "Routine carpet shampooing and routine repainting between tenants are generally non-deductible maintenance duties of the property owner.",
+      "supportingSource": {
+        "id": "src-ca-courts-dep",
+        "title": "California Department of Consumer Affairs: A Guide to Residential Tenants’ Rights",
+        "authority": "California Department of Consumer Affairs",
+        "provision": "Section IV: Refund of Security Deposits",
+        "dateOrVersion": "2023 Revision",
+        "url": "https://www.courts.ca.gov/selfhelp-housing.htm",
+        "sourceType": "official_guidance",
+        "status": "authoritative"
+      },
+      "sourceStatus": "authoritative"
+    }
+  ],
+  "possibleRemedies": [
+    {
+      "id": "rem-1",
+      "title": "Formal Statutory Demand Letter for Deposit Return",
+      "description": "Send a certified letter citing the specific statute and 21-day deadline, formally requesting repayment within 10 to 14 business days.",
+      "prerequisites": [
+        "Documentation of surrender date and key return",
+        "Copy of lease agreement stating deposit amount"
+      ],
+      "relevantEvidence": [
+        "Move-in inspection checklist",
+        "Written move-out confirmation",
+        "Postal tracking"
+      ],
+      "supportingSource": {
+        "id": "src-ca-civ-1950",
+        "title": "California Civil Code § 1950.5(g)",
+        "authority": "California State Legislature",
+        "provision": "Subdivision (g)",
+        "sourceType": "statute",
+        "status": "statutory"
+      },
+      "uncertainty": "A demand letter does not compel payment by force of law, but is usually an essential predicate before small claims court."
+    },
+    {
+      "id": "rem-2",
+      "title": "Small Claims Court Action (With Potential Bad Faith Penalties)",
+      "description": "If the landlord fails to remit payment following the demand, file an action in local small claims court. In cases of bad-faith retention, courts may award statutory damages up to twice the deposit amount in addition to actual damages.",
+      "prerequisites": [
+        "Service of process on the landlord or property management entity"
+      ],
+      "relevantEvidence": [
+        "Photographs of rental condition",
+        "Demand letter and delivery receipt"
+      ],
+      "supportingSource": {
+        "id": "src-ca-civ-1950-l",
+        "title": "California Civil Code § 1950.5(l)",
+        "authority": "California State Legislature",
+        "provision": "Subdivision (l) - Bad Faith Damages",
+        "sourceType": "statute",
+        "status": "statutory"
+      },
+      "uncertainty": "Statutory bad faith penalties are discretionary and depend on the presiding judicial officer finding willful misconduct."
+    }
+  ],
+  "remedyPath": [
+    {
+      "stepNumber": 1,
+      "title": "Clarify the Situation & Surrender Date",
+      "stage": "situation",
+      "summary": "Verify the exact date physical keys and control were transferred to the landlord.",
+      "detailedGuidance": "The statutory clock starts the day possession is formally returned. Check your emails or text messages confirming the walkthrough time.",
+      "keyPoints": [
+        "Confirm date keys surrendered",
+        "Preserve move-out confirmation email"
+      ]
+    },
+    {
+      "stepNumber": 2,
+      "title": "Understand Potentially Relevant Rights",
+      "stage": "understand_right",
+      "summary": "Review Civil Code 1950.5 guarantees regarding 21-day deadline and normal wear.",
+      "detailedGuidance": "Familiarize yourself with the explicit prohibition against charging departing tenants for standard apartment turnover maintenance.",
+      "keyPoints": [
+        "21 calendar day statutory limit",
+        "Itemization mandatory for deductions over $125"
+      ]
+    },
+    {
+      "stepNumber": 3,
+      "title": "Gather & Organize Evidence",
+      "stage": "gather_evidence",
+      "summary": "Assemble lease, deposit receipts, move-in/move-out photos, and all communications.",
+      "detailedGuidance": "Place high-resolution photos into a chronological folder. Ensure timestamps or EXIF metadata confirm the condition at move-in versus move-out.",
+      "keyPoints": [
+        "Move-in inspection sheet",
+        "Move-out walkthrough notes",
+        "Bank deposit clearance record"
+      ]
+    },
+    {
+      "stepNumber": 4,
+      "title": "Issue Formal Written Demand Letter",
+      "stage": "first_action",
+      "summary": "Deliver a structured demand letter giving the landlord 10 business days to return funds.",
+      "detailedGuidance": "State factually that the 21 days have passed without the required documentation. Request payment by check or electronic transfer.",
+      "keyPoints": [
+        "Send via Certified Mail with Return Receipt",
+        "Keep an exact stamped copy for your records"
+      ]
+    },
+    {
+      "stepNumber": 5,
+      "title": "Evaluate Escalation to Small Claims Court",
+      "stage": "escalation",
+      "summary": "If unresolved, prepare small claims filing forms in the county where the property is located.",
+      "detailedGuidance": "Small claims court procedures are designed for self-represented individuals without high attorney fees. Present your organized evidence binder.",
+      "keyPoints": [
+        "Filing fee typically under $75",
+        "Request filing fee reimbursement in judgment"
+      ]
+    }
+  ],
+  "evidenceChecklist": [
+    {
+      "id": "ev-1",
+      "name": "Residential Lease Agreement & Deposit Addendum",
+      "whyItMatters": "Establishes the contractual $1,800 deposit amount and terms of tenancy.",
+      "status": "have"
+    },
+    {
+      "id": "ev-2",
+      "name": "Move-in & Move-out Photographs / Video",
+      "whyItMatters": "Proves baseline condition upon entry and lack of damage upon exit.",
+      "status": "have"
+    },
+    {
+      "id": "ev-3",
+      "name": "Written Notice of Intent to Vacate & Key Surrender Receipt",
+      "whyItMatters": "Fixes the exact start date of the 21-day statutory clock.",
+      "status": "have"
+    },
+    {
+      "id": "ev-4",
+      "name": "Landlord’s Written Deduction Notice (or lack thereof)",
+      "whyItMatters": "Shows absence of required invoices, receipts, or hourly labor breakdowns.",
+      "status": "need"
+    },
+    {
+      "id": "ev-5",
+      "name": "Written Demand Letter with Certified Mail Proof of Delivery",
+      "whyItMatters": "Demonstrates to a mediator or judge that reasonable resolution was attempted.",
+      "status": "not_sure"
+    }
+  ],
+  "importantDates": {
+    "hasVerifiedDeadline": true,
+    "deadlineDescription": "Statutory 21-Day Deadline for Deposit Accounting",
+    "dateOrTimeframe": "21 calendar days from date premises vacated and keys surrendered",
+    "whatTriggersIt": "Physical surrender of premises and return of keys to landlord",
+    "explanation": "California Civil Code § 1950.5(g)(1) requires the landlord to furnish a personal delivery or mail an itemized statement plus remaining deposit within 21 calendar days.",
+    "supportingSource": {
+      "id": "src-ca-civ-1950",
+      "title": "California Civil Code § 1950.5(g)(1)",
+      "authority": "California State Legislature",
+      "provision": "Cal. Civ. Code § 1950.5(g)(1)",
+      "sourceType": "statute",
+      "status": "statutory"
+    }
+  },
+  "possibleNextSteps": [
+    {
+      "step": "Draft and send statutory demand letter",
+      "timeline": "Within 3 to 5 business days",
+      "details": "Draft using the evidence gathered; cite Cal. Civ. Code § 1950.5 and specify a 10-day deadline.",
+      "urgency": "immediate"
+    },
+    {
+      "step": "Compile physical and digital evidence binder",
+      "timeline": "This week",
+      "details": "Print color copies of move-in and move-out photos, lease agreement, and communications.",
+      "urgency": "short_term"
+    },
+    {
+      "step": "Check local small claims filing procedures and jurisdiction",
+      "timeline": "If no reply within 10 days of letter receipt",
+      "details": "Download SC-100 (Plaintiff’s Claim) from the county superior court website.",
+      "urgency": "medium_term"
+    }
+  ],
+  "questionsForLegalProfessional": [
+    {
+      "id": "q-1",
+      "question": "Does the landlord’s total failure to send itemized receipts within 21 days forfeit their right to claim damages under California law?",
+      "context": "Under Granberry v. Islay Investments (1995), a landlord who fails to account within 21 days loses the right to retain any portion, though questions remain on set-offs.",
+      "priority": "high"
+    },
+    {
+      "id": "q-2",
+      "question": "Would the circumstances of this case justify seeking statutory bad-faith damages up to two times the deposit under subdivision (l)?",
+      "context": "Helps assess whether claiming the full $3,600 penalty is prudent in small claims court.",
+      "priority": "high"
+    },
+    {
+      "id": "q-3",
+      "question": "What specific documentation standard is required if the landlord later claims self-performed painting labor?",
+      "context": "Statutes require describing the work and time spent if done by landlord personally.",
+      "priority": "medium"
+    }
+  ],
+  "sources": [
+    {
+      "id": "src-ca-civ-1950",
+      "title": "California Civil Code § 1950.5 (Residential Security Deposits)",
+      "authority": "California State Legislature",
+      "provision": "§ 1950.5(g)(1), (l)",
+      "dateOrVersion": "Current codified statute",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5",
+      "sourceType": "statute",
+      "status": "statutory"
+    },
+    {
+      "id": "src-ca-courts-dep",
+      "title": "California Courts Self-Help Guide: Security Deposits",
+      "authority": "Judicial Council of California",
+      "provision": "Self-Help Housing Series",
+      "dateOrVersion": "2024 Edition",
+      "url": "https://selfhelp.courts.ca.gov/security-deposits",
+      "sourceType": "official_guidance",
+      "status": "verified"
+    }
+  ]
+}

@@ -227,10 +227,13 @@ CORPUS_SOURCES: List[LegalSource] = [
 
 class SourceRepository:
     def __init__(self):
+        from app.services.embedding_service import embedding_service
         self._sources: Dict[str, LegalSource] = {s.id: s for s in CORPUS_SOURCES}
         self._chunks: Dict[str, LegalChunk] = {}
         for s in CORPUS_SOURCES:
             for c in s.chunks:
+                if c.embedding is None:
+                    c.embedding = embedding_service._deterministic_hash_vector(c.text + " " + " ".join(c.keywords))
                 self._chunks[c.chunk_id] = c
 
     def get_source_by_id(self, source_id: str) -> Optional[LegalSource]:

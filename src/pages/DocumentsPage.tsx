@@ -241,7 +241,7 @@ Upon your written request within the thirty-day period, this office will provide
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
         <LegalDisclaimerBanner variant="compact" />
 
         {/* Input Form Card */}
@@ -656,7 +656,7 @@ Upon your written request within the thirty-day period, this office will provide
             )}
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 };

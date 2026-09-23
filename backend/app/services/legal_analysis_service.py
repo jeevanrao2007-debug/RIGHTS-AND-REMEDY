@@ -28,7 +28,8 @@ class LegalAnalysisService:
         country: str,
         state_or_region: Optional[str],
         category: Optional[str],
-        retrieved_sources: List[Any]
+        retrieved_sources: List[Any],
+        clarifications: Optional[Dict[str, Any]] = None
     ) -> LegalAnalysis:
         """
         Deterministic, legally sound fallback grounded strictly in the retrieved sources.
@@ -220,7 +221,7 @@ class LegalAnalysisService:
                 f"User reported: '{narrative[:250]}'",
                 "Dispute involves withheld funds, compensation, or unitemized charges.",
                 f"Jurisdiction identified as {state_or_region or 'General Jurisdiction'}, {country}."
-            ],
+            ] + ([f"Clarification: {k} → {v}" for k, v in clarifications.items()] if clarifications else []),
             missing_or_uncertain_information=[
                 "Proof of whether written notice was transmitted by certified mail or verifiable electronic delivery.",
                 "Whether the other party provided formal receipts or contractor invoices."
@@ -280,11 +281,16 @@ class LegalAnalysisService:
             "4. Only include a verified deadline if explicitly stated in the retrieved sources. Otherwise set verified_deadlines to empty."
         )
 
+        clarifications_str = ""
+        if request.clarifications:
+            clarifications_str = "\n<follow_up_answers>\n" + "\n".join(f"- {k}: {v}" for k, v in request.clarifications.items()) + "\n</follow_up_answers>\n"
+
         user_prompt = (
             f"Jurisdiction: {request.state_or_region or 'State'}, {request.country}\n"
             f"Category: {request.category or 'General'}\n\n"
             f"{wrap_retrieved_sources(sources_for_prompt)}\n\n"
-            f"{wrap_user_narrative(cleaned_narrative)}"
+            f"{wrap_user_narrative(cleaned_narrative)}\n"
+            f"{clarifications_str}"
         )
 
         def fallback():
@@ -294,7 +300,8 @@ class LegalAnalysisService:
                 country=request.country,
                 state_or_region=request.state_or_region,
                 category=request.category,
-                retrieved_sources=retrieval.sources
+                retrieved_sources=retrieval.sources,
+                clarifications=request.clarifications
             )
 
         analysis = await gemini_service.generate_structured(

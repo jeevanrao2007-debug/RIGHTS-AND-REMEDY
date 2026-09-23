@@ -1,0 +1,16 @@
+[
+  {
+    "id": "case-demo-101",
+    "title": "Withheld Security Deposit & Disputed Cleaning Deductions",
+    "category": "Housing",
+    "jurisdiction": {
+      "country": "United States",
+      "stateOrRegion": "California"
+    },
+    "createdAt": "2026-09-20T10:00:00.000Z",
+    "updatedAt": "2026-09-22T10:00:00.000Z",
+    "status": "active",
+    "checklistCompletedCount": 2,
+    "checklistTotalCount": 4
+  }
+]

@@ -80,7 +80,7 @@ export const SettingsPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50/50 pb-20">
       <LegalDisclaimerBanner variant="compact" />
 
-      <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
         {/* Header */}
         <div className="space-y-2 border-b border-slate-200 pb-6">
           <div className="inline-flex items-center gap-1.5 rounded-md bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-800">
@@ -338,7 +338,7 @@ export const SettingsPage: React.FC = () => {
 
         {/* Formal Disclaimer Reminder */}
         <LegalDisclaimerBanner variant="full" />
-      </main>
+      </div>
     </div>
   );
 };

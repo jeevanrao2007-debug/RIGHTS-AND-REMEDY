@@ -1,0 +1,22 @@
+[
+  {
+    "id": "src-ca-civ-1950",
+    "title": "California Civil Code § 1950.5 (Residential Security Deposits)",
+    "authority": "California State Legislature",
+    "provision": "§ 1950.5(g)(1), (l)",
+    "dateOrVersion": "Current codified statute",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5",
+    "sourceType": "statute",
+    "status": "statutory"
+  },
+  {
+    "id": "src-ca-courts-dep",
+    "title": "California Courts Self-Help Guide: Security Deposits",
+    "authority": "Judicial Council of California",
+    "provision": "Self-Help Housing Series",
+    "dateOrVersion": "2024 Edition",
+    "url": "https://selfhelp.courts.ca.gov/security-deposits",
+    "sourceType": "official_guidance",
+    "status": "verified"
+  }
+]

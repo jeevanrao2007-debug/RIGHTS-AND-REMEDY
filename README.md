@@ -7,7 +7,7 @@
 [![React](https://img.shields.io/badge/Frontend-React_19_%7C_TypeScript-3b82f6?style=flat-square&logo=react)](https://react.dev/)
 [![FastAPI](https://img.shields.io/badge/Backend-FastAPI_%7C_Python_3.11-009688?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Google Gemini](https://img.shields.io/badge/AI_Engine-Google_Gemini-8e24aa?style=flat-square&logo=googlegemini)](https://ai.google.dev/)
-[![WCAG](https://img.shields.io/badge/Accessibility-WCAG_2.2_AA-16a34a?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
+[![WCAG](https://img.shields.io/badge/Accessibility-Aligned_with_WCAG_2.2_AA-16a34a?style=flat-square)](https://www.w3.org/WAI/standards-guidelines/wcag/)
 [![Tests](https://img.shields.io/badge/Tests-55_Passed_(100%25)-emerald?style=flat-square)](https://github.com/jeevanrao2007-debug/RIGHTS-AND-REMEDY)
 
 **Live Production Application:** [https://rights-and-remedy.web.app](https://rights-and-remedy.web.app)
@@ -263,6 +263,16 @@ flowchart TD
     Hosting -. Serves SPA .-> UI
 ```
 
+### Operational Deployment Modes
+1. **Production Deployment (Firebase Hosting CDN + Cloud Firestore):**
+   - The React 19 SPA is served with global edge caching from Firebase Hosting (`https://rights-and-remedy.web.app`).
+   - Authenticated cases, evidence states, and preferences sync directly with Cloud Firestore under strict per-user security rules (`request.auth.uid == resource.data.user_id`).
+   - All 11 analytical stages and the 5-stage Remedy Path run in-browser with full statutory corpus grounding and resilient offline fallbacks. Dedicated `/api/**` JSON headers and rewrites serve lightweight structured JSON endpoints (`/api/health`, `/api/cases`, `/api/sources`), eliminating HTML rewrite interception.
+2. **Local / Self-Hosted Full-Stack Mode (Node.js Gateway + FastAPI Microservice):**
+   - Run concurrently via `run.bat` or `npm run dev` + `uvicorn`.
+   - Node.js Express Gateway (:3000) unifies client traffic, handles CORS and multipart document streaming, and proxies requests to the Python FastAPI microservice (:8000).
+   - FastAPI microservice runs PyMuPDF binary PDF extraction, python-docx parsing, pre-computed vector similarity retrieval, citation validation, and Gemini AI synthesis.
+
 ---
 
 ## 8. Security & Data Protection
@@ -275,7 +285,7 @@ flowchart TD
 
 ---
 
-## 9. Accessibility (WCAG 2.2 AA)
+## 9. Accessibility (Aligned with WCAG 2.2 AA Principles)
 
 Rights & Remedy Navigator is designed to be accessible to users in high-stress situations regardless of device or ability:
 
@@ -331,7 +341,7 @@ rights-&-remedy-navigator/
 │   │   ├── schemas/                 # Pydantic data validation models
 │   │   ├── security/                # Prompt security, magic-byte checks, output auditing
 │   │   └── services/                # RAG retrieval, citation verification, document parsing
-│   └── tests/                       # 27 automated pytest tests (unit, integration, security)
+│   └── tests/                       # 35 automated pytest tests (18 unit/RAG/integration + 17 security)
 │
 └── src/                             # React 19 Frontend Source
     ├── App.tsx                      # Top-level routing and layout shell
@@ -343,7 +353,7 @@ rights-&-remedy-navigator/
     ├── context/                     # AuthContext (Firebase authentication state)
     ├── pages/                       # Route pages (Home, Intake, Questions, Analysis, Documents, Cases, Settings)
     ├── services/                    # API client, normalizer, Firebase Auth, Firestore sync, LegalEngine
-    ├── test/                        # 16 Vitest frontend tests (Intake, Documents, Evidence, etc.)
+    ├── test/                        # 20 Vitest frontend tests (Intake, Documents, Evidence, A11y, Caching)
     └── types/                       # Legal domain TypeScript definitions
 ```
 

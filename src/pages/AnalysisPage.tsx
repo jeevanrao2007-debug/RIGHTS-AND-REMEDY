@@ -98,7 +98,7 @@ export const AnalysisPage: React.FC = () => {
       {/* Top Disclaimer */}
       <LegalDisclaimerBanner variant="compact" />
 
-      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 space-y-8" id="analysis-main-content">
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8 space-y-8" id="analysis-main-content">
         {/* Navigation & Controls */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
           <Link
@@ -311,7 +311,7 @@ export const AnalysisPage: React.FC = () => {
 
         {/* Comprehensive Disclaimer Banner at Dashboard Footer */}
         <LegalDisclaimerBanner variant="full" />
-      </main>
+      </div>
     </div>
   );
 };

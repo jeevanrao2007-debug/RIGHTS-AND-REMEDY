@@ -382,6 +382,11 @@ class ApiClient {
     this.caseCache.set(result.id, { data: result, timestamp: Date.now() });
     this.casesListCache = null;
 
+    // Cache locally in sessionStorage for guest session resilience
+    try {
+      sessionStorage.setItem(`rrn_case_${result.id}`, JSON.stringify(result));
+    } catch {}
+
     // Automatically sync case to Cloud Firestore if signed into Firebase
     try {
       if (firestoreService.isAvailable()) {
@@ -417,19 +422,36 @@ class ApiClient {
       headers,
     });
 
-    if (!response.ok) {
-      const raw = await response.text();
+    const contentType = response.headers.get('content-type') || '';
+    const rawText = await response.text();
+    const isHtml =
+      rawText.includes('<!DOCTYPE') ||
+      rawText.includes('<!doctype') ||
+      rawText.includes('<html') ||
+      contentType.includes('text/html');
+
+    if (!response.ok || isHtml || !contentType.includes('application/json')) {
       let msg = `Document upload failed (Status ${response.status})`;
-      try {
-        const parsed = JSON.parse(raw);
-        msg = parsed.detail || parsed.error?.message || parsed.message || msg;
-      } catch {}
+      if (isHtml) {
+        msg = 'Document upload extraction requires active backend service. You can paste document clauses directly for review.';
+      } else {
+        try {
+          const parsed = JSON.parse(rawText);
+          msg = parsed.detail || parsed.error?.message || parsed.message || msg;
+        } catch {}
+      }
       throw new Error(msg);
     }
 
-    const data = await response.json();
+    let data: any;
+    try {
+      data = JSON.parse(rawText);
+    } catch {
+      throw new Error('Failed to parse document upload response as JSON');
+    }
+
     return {
-      documentId: data.document_id || data.id,
+      documentId: data.document_id || data.id || `doc-${Date.now()}`,
       extractedText: data.extracted_text || data.extractedText || '',
       filename: data.filename || file.name,
     };
@@ -511,8 +533,31 @@ class ApiClient {
           checklistTotalCount: demoCase.evidenceChecklist.length,
         },
       ];
-      this.casesListCache = { data: demoList, timestamp: Date.now() };
-      return demoList;
+      const sessionCases: CaseListItem[] = [];
+      try {
+        for (let i = 0; i < sessionStorage.length; i++) {
+          const key = sessionStorage.key(i);
+          if (key && key.startsWith('rrn_case_')) {
+            const parsed = JSON.parse(sessionStorage.getItem(key) || '{}');
+            if (parsed.id && parsed.title) {
+              sessionCases.push({
+                id: parsed.id,
+                title: parsed.title,
+                category: parsed.category || 'Other',
+                jurisdiction: parsed.jurisdiction || { country: 'General' },
+                createdAt: parsed.createdAt || new Date().toISOString(),
+                updatedAt: parsed.updatedAt || new Date().toISOString(),
+                status: 'active',
+                checklistCompletedCount: (parsed.evidenceChecklist || []).filter((e: any) => e.status === 'have').length,
+                checklistTotalCount: (parsed.evidenceChecklist || []).length,
+              });
+            }
+          }
+        }
+      } catch {}
+      const combinedList = [...sessionCases, ...demoList.filter((d) => !sessionCases.some((s) => s.id === d.id))];
+      this.casesListCache = { data: combinedList, timestamp: Date.now() };
+      return combinedList;
     }
   }
 
@@ -521,6 +566,16 @@ class ApiClient {
     if (cached && Date.now() - cached.timestamp < this.cacheTtlMs) {
       return cached.data;
     }
+
+    // Check local sessionStorage for resilient guest sessions
+    try {
+      const stored = sessionStorage.getItem(`rrn_case_${caseId}`);
+      if (stored) {
+        const parsed = JSON.parse(stored) as LegalAnalysisResult;
+        this.caseCache.set(caseId, { data: parsed, timestamp: Date.now() });
+        return parsed;
+      }
+    } catch {}
 
     // If authenticated with Firebase, fetch directly from Firestore
     try {

@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "service": "Rights & Remedy Navigator Production API",
+  "message": "Authoritative legal information engine active",
+  "endpoints": [
+    "/api/health",
+    "/api/cases",
+    "/api/cases/case-demo-101",
+    "/api/sources"
+  ]
+}

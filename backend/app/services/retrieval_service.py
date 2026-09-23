@@ -80,8 +80,8 @@ class LegalRetrievalService:
             keyword_matches = sum(1 for kw in chunk.keywords if any(term in kw for term in query_terms))
             keyword_score = min(keyword_matches * 0.15, 0.6)
 
-            # Vector similarity with cached chunk embedding
-            chunk_emb = await self._get_chunk_embedding(chunk)
+            # Vector similarity using pre-computed chunk embedding
+            chunk_emb = chunk.embedding if chunk.embedding is not None else await self._get_chunk_embedding(chunk)
             sim = cosine_similarity(query_embedding, chunk_emb)
 
             # Combined score
