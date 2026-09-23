@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { CheckCircle, AlertCircle, HelpCircle, FileCheck, Check, Clock } from 'lucide-react';
 import type { EvidenceItem, EvidenceStatus } from '../../types/legal';
 import { api } from '../../services/api';
@@ -17,28 +17,39 @@ export const EvidenceChecklistComponent: React.FC<EvidenceChecklistComponentProp
   const [items, setItems] = useState<EvidenceItem[]>(initialItems);
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
-  const handleStatusSelect = async (itemId: string, status: EvidenceStatus) => {
-    // Optimistic UI update
-    setItems((prev) =>
-      prev.map((it) => (it.id === itemId ? { ...it, status } : it))
-    );
-    if (onStatusChange) {
-      onStatusChange(itemId, status);
-    }
+  const handleStatusSelect = useCallback(
+    async (itemId: string, status: EvidenceStatus) => {
+      // Optimistic UI update
+      setItems((prev) =>
+        prev.map((it) => (it.id === itemId ? { ...it, status } : it))
+      );
+      if (onStatusChange) {
+        onStatusChange(itemId, status);
+      }
 
-    setUpdatingId(itemId);
-    try {
-      await api.updateEvidenceStatus(caseId, itemId, status);
-    } catch (e) {
-      console.warn('Failed to persist evidence status to server, kept locally:', e);
-    } finally {
-      setUpdatingId(null);
-    }
-  };
+      setUpdatingId(itemId);
+      try {
+        await api.updateEvidenceStatus(caseId, itemId, status);
+      } catch (e) {
+        console.warn('Failed to persist evidence status to server, kept locally:', e);
+      } finally {
+        setUpdatingId(null);
+      }
+    },
+    [caseId, onStatusChange]
+  );
 
-  const haveCount = items.filter((i) => i.status === 'have').length;
-  const needCount = items.filter((i) => i.status === 'need').length;
-  const notSureCount = items.filter((i) => i.status === 'not_sure').length;
+  const { haveCount, needCount, notSureCount } = useMemo(() => {
+    let have = 0,
+      need = 0,
+      notSure = 0;
+    for (const item of items) {
+      if (item.status === 'have') have++;
+      else if (item.status === 'need') need++;
+      else if (item.status === 'not_sure') notSure++;
+    }
+    return { haveCount: have, needCount: need, notSureCount: notSure };
+  }, [items]);
 
   return (
     <section

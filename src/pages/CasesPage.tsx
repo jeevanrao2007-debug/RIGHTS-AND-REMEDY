@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FolderGit2,
@@ -23,7 +23,7 @@ export const CasesPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  const loadCases = async () => {
+  const loadCases = useCallback(async () => {
     setIsLoading(true);
     setError(null);
     try {
@@ -34,30 +34,33 @@ export const CasesPage: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     loadCases();
-  }, []);
+  }, [loadCases]);
 
-  const handleDelete = async (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleDelete = useCallback(
+    async (e: React.MouseEvent, id: string) => {
+      e.preventDefault();
+      e.stopPropagation();
 
-    if (!window.confirm('Are you sure you want to remove this case from your history?')) {
-      return;
-    }
+      if (!window.confirm('Are you sure you want to remove this case from your history?')) {
+        return;
+      }
 
-    setDeletingId(id);
-    try {
-      await api.deleteCase(id);
-      setCases((prev) => prev.filter((c) => c.id !== id));
-    } catch (err: any) {
-      alert(err.message || 'Failed to delete case.');
-    } finally {
-      setDeletingId(null);
-    }
-  };
+      setDeletingId(id);
+      try {
+        await api.deleteCase(id);
+        setCases((prev) => prev.filter((c) => c.id !== id));
+      } catch (err: any) {
+        alert(err.message || 'Failed to delete case.');
+      } finally {
+        setDeletingId(null);
+      }
+    },
+    []
+  );
 
   return (
     <div className="min-h-screen bg-slate-50/50 pb-20">

@@ -132,14 +132,22 @@ export const SettingsPage: React.FC = () => {
             </h3>
 
             {authError && (
-              <div className="rounded-lg bg-red-50 p-3 text-xs font-medium text-red-700 border border-red-200 flex items-center gap-2">
+              <div
+                role="alert"
+                aria-live="assertive"
+                className="rounded-lg bg-red-50 p-3 text-xs font-medium text-red-700 border border-red-200 flex items-center gap-2"
+              >
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 <span>{authError}</span>
               </div>
             )}
 
             {authSuccess && (
-              <div className="rounded-lg bg-emerald-50 p-3 text-xs font-medium text-emerald-800 border border-emerald-200 flex items-center gap-2">
+              <div
+                role="status"
+                aria-live="polite"
+                className="rounded-lg bg-emerald-50 p-3 text-xs font-medium text-emerald-800 border border-emerald-200 flex items-center gap-2"
+              >
                 <CheckCircle2 className="h-4 w-4 shrink-0" />
                 <span>{authSuccess}</span>
               </div>
@@ -154,7 +162,7 @@ export const SettingsPage: React.FC = () => {
                 id="google-signin-btn"
                 className="w-full inline-flex items-center justify-center gap-3 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-1 transition-all shadow-xs cursor-pointer disabled:opacity-50"
               >
-                <svg className="h-4 w-4" viewBox="0 0 24 24">
+                <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
                   <path
                     fill="#4285F4"
                     d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.65v3.03h3.88c2.27-2.09 3.66-5.17 3.66-9.12z"
@@ -187,27 +195,33 @@ export const SettingsPage: React.FC = () => {
 
             <form onSubmit={handleAuthSubmit} className="space-y-4 max-w-md">
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700 block">
+                <label htmlFor="settings-email-input" className="text-xs font-semibold text-slate-700 block">
                   Email Address
                 </label>
                 <input
+                  id="settings-email-input"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
+                  autoComplete="email"
+                  required
                   className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-900"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-semibold text-slate-700 block">
+                <label htmlFor="settings-password-input" className="text-xs font-semibold text-slate-700 block">
                   Password
                 </label>
                 <input
+                  id="settings-password-input"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
+                  autoComplete={authMode === 'signin' ? 'current-password' : 'new-password'}
+                  required
                   className="w-full rounded-lg border border-slate-300 px-3.5 py-2 text-sm text-slate-900 focus:border-slate-900 focus:outline-hidden focus:ring-1 focus:ring-slate-900"
                 />
               </div>

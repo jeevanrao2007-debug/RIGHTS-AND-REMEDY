@@ -42,55 +42,61 @@ export const DynamicQuestionsPage: React.FC = () => {
     }
   }, [navigate]);
 
+  const handleAnswerChange = React.useCallback((questionId: string, val: any) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [questionId]: val,
+    }));
+  }, []);
+
+  const handleCheckboxToggle = React.useCallback((questionId: string, option: string) => {
+    setAnswers((prev) => {
+      const currentList: string[] = Array.isArray(prev[questionId]) ? prev[questionId] : [];
+      const exists = currentList.includes(option);
+      const updated = exists ? currentList.filter((item) => item !== option) : [...currentList, option];
+      return {
+        ...prev,
+        [questionId]: updated,
+      };
+    });
+  }, []);
+
+  const handleFinalSubmit = React.useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!draft) return;
+      setApiError(null);
+      setIsLoading(true);
+
+      try {
+        // Save current answers into draft in session
+        const updatedDraft = { ...draft, answers };
+        sessionStorage.setItem('rrn_intake_draft', JSON.stringify(updatedDraft));
+
+        const result = await api.completeLegalAnalysis({
+          narrative: draft.narrative,
+          country: draft.jurisdiction.country,
+          stateOrRegion: draft.jurisdiction.stateOrRegion,
+          category: draft.category,
+          answers,
+        });
+
+        // Clear draft once completed and redirect to analysis dashboard
+        sessionStorage.removeItem('rrn_intake_draft');
+        navigate(`/analysis/${result.id}`, { replace: true });
+      } catch (err: any) {
+        setApiError(err.message || 'Failed to complete legal analysis. Please try again.');
+        setIsLoading(false);
+      }
+    },
+    [draft, answers, navigate]
+  );
+
   if (!draft) {
     return null;
   }
 
   const questions: FollowUpQuestion[] = draft.followUpQuestions || [];
-
-  const handleAnswerChange = (questionId: string, val: any) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: val,
-    }));
-  };
-
-  const handleCheckboxToggle = (questionId: string, option: string) => {
-    const currentList: string[] = Array.isArray(answers[questionId]) ? answers[questionId] : [];
-    const exists = currentList.includes(option);
-    const updated = exists ? currentList.filter((item) => item !== option) : [...currentList, option];
-    setAnswers((prev) => ({
-      ...prev,
-      [questionId]: updated,
-    }));
-  };
-
-  const handleFinalSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setApiError(null);
-    setIsLoading(true);
-
-    try {
-      // Save current answers into draft in session
-      const updatedDraft = { ...draft, answers };
-      sessionStorage.setItem('rrn_intake_draft', JSON.stringify(updatedDraft));
-
-      const result = await api.completeLegalAnalysis({
-        narrative: draft.narrative,
-        country: draft.jurisdiction.country,
-        stateOrRegion: draft.jurisdiction.stateOrRegion,
-        category: draft.category,
-        answers,
-      });
-
-      // Clear draft once completed and redirect to analysis dashboard
-      sessionStorage.removeItem('rrn_intake_draft');
-      navigate(`/analysis/${result.id}`, { replace: true });
-    } catch (err: any) {
-      setApiError(err.message || 'Failed to complete legal analysis. Please try again.');
-      setIsLoading(false);
-    }
-  };
 
   if (isLoading) {
     return (

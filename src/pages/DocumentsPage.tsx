@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Upload,
   FileText,
@@ -18,6 +18,44 @@ import type { DocumentAnalysisResult, DocumentAnalysisMode } from '../types/lega
 import { LoadingState } from '../components/common/LoadingState';
 import { ErrorState } from '../components/common/ErrorState';
 import { LegalDisclaimerBanner } from '../components/common/LegalDisclaimerBanner';
+
+const DOCUMENT_ANALYSIS_MODES: { id: DocumentAnalysisMode; title: string; desc: string }[] = [
+  {
+    id: 'explain_simply',
+    title: 'Explain Simply',
+    desc: 'Translate legal phrasing into plain English summaries',
+  },
+  {
+    id: 'find_obligations',
+    title: 'Find Obligations',
+    desc: 'Identify what duties and promises each party agreed to',
+  },
+  {
+    id: 'find_important_clauses',
+    title: 'Important Clauses',
+    desc: 'Highlight critical provisions, indemnities, and terms',
+  },
+  {
+    id: 'identify_potential_risks',
+    title: 'Identify Potential Risks',
+    desc: 'Flag one-sided terms, liability shifts, and red flags',
+  },
+  {
+    id: 'find_dates_deadlines',
+    title: 'Dates & Deadlines',
+    desc: 'Extract notice windows, renewal cutoff dates, and timelines',
+  },
+  {
+    id: 'find_inconsistencies',
+    title: 'Find Inconsistencies',
+    desc: 'Detect contradictory language or ambiguous phrasing',
+  },
+  {
+    id: 'ask_questions',
+    title: 'Ask Specific Question',
+    desc: 'Get an answer to a specific question about this document',
+  },
+];
 
 export const DocumentsPage: React.FC = () => {
   const [documentName, setDocumentName] = useState<string>('');
@@ -144,79 +182,46 @@ Upon your written request within the thirty-day period, this office will provide
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!textContent.trim()) {
-      setError('Please provide or upload document text to review.');
-      return;
-    }
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!textContent.trim()) {
+        setError('Please provide or upload document text to review.');
+        return;
+      }
 
-    setIsLoading(true);
-    setError(null);
+      setIsLoading(true);
+      setError(null);
 
-    try {
-      const response = await api.analyzeDocument({
-        documentName: documentName || 'Legal Document',
-        textContent: textContent.trim(),
-        mode,
-        userQuestion: mode === 'ask_questions' ? userQuestion : undefined,
-        fileSize,
-      });
+      try {
+        const response = await api.analyzeDocument({
+          documentName: documentName || 'Legal Document',
+          textContent: textContent.trim(),
+          mode,
+          userQuestion: mode === 'ask_questions' ? userQuestion : undefined,
+          fileSize,
+        });
 
-      setResult(response);
-    } catch (err: any) {
-      console.error('Error analyzing document:', err);
-      setError(err.message || 'Failed to analyze document. Please check your text and retry.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        setResult(response);
+      } catch (err: any) {
+        console.error('Error analyzing document:', err);
+        setError(err.message || 'Failed to analyze document. Please check your text and retry.');
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [documentName, textContent, mode, userQuestion, fileSize]
+  );
 
-  const copyToClipboard = (text: string, sectionId: string) => {
+  const copyToClipboard = useCallback((text: string, sectionId: string) => {
     navigator.clipboard.writeText(text);
     setCopiedSection(sectionId);
     setTimeout(() => {
       setCopiedSection(null);
     }, 2000);
-  };
+  }, []);
 
-  const modes: { id: DocumentAnalysisMode; title: string; desc: string }[] = [
-    {
-      id: 'explain_simply',
-      title: 'Explain Simply',
-      desc: 'Translate legal phrasing into plain English summaries',
-    },
-    {
-      id: 'find_obligations',
-      title: 'Find Obligations',
-      desc: 'Identify what duties and promises each party agreed to',
-    },
-    {
-      id: 'find_important_clauses',
-      title: 'Important Clauses',
-      desc: 'Highlight critical provisions, indemnities, and terms',
-    },
-    {
-      id: 'identify_potential_risks',
-      title: 'Identify Potential Risks',
-      desc: 'Flag one-sided terms, liability shifts, and red flags',
-    },
-    {
-      id: 'find_dates_deadlines',
-      title: 'Dates & Deadlines',
-      desc: 'Extract notice windows, renewal cutoff dates, and timelines',
-    },
-    {
-      id: 'find_inconsistencies',
-      title: 'Find Inconsistencies',
-      desc: 'Detect contradictory language or ambiguous phrasing',
-    },
-    {
-      id: 'ask_questions',
-      title: 'Ask Specific Question',
-      desc: 'Get an answer to a specific question about this document',
-    },
-  ];
+  const modes = DOCUMENT_ANALYSIS_MODES;
 
   return (
     <div className="min-h-screen bg-slate-50 pb-16">

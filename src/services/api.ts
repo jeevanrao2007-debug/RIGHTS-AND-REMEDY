@@ -210,6 +210,10 @@ export function normalizeAnalysisResult(raw: any): LegalAnalysisResult {
 class ApiClient {
   private readonly baseUrl: string;
   private readonly defaultTimeoutMs: number;
+  private readonly cacheTtlMs = 60000; // 60s cache TTL for read efficiency
+  private caseCache = new Map<string, { data: LegalAnalysisResult; timestamp: number }>();
+  private casesListCache: { data: CaseListItem[]; timestamp: number } | null = null;
+  private docAnalysisCache = new Map<string, { data: DocumentAnalysisResult; timestamp: number }>();
 
   constructor() {
     this.baseUrl = import.meta.env.VITE_API_BASE_URL || '/api';
@@ -374,6 +378,10 @@ class ApiClient {
       }
     }
 
+    // Cache newly created case and invalidate case list cache
+    this.caseCache.set(result.id, { data: result, timestamp: Date.now() });
+    this.casesListCache = null;
+
     // Automatically sync case to Cloud Firestore if signed into Firebase
     try {
       if (firestoreService.isAvailable()) {
@@ -427,7 +435,7 @@ class ApiClient {
     };
   }
 
-  // 3. Document Analysis: Uploaded contract or policy review
+  // 3. Document Analysis: Uploaded contract or policy review with smart memoization
   async analyzeDocument(payload: {
     documentName: string;
     textContent: string;
@@ -435,15 +443,23 @@ class ApiClient {
     mode: DocumentAnalysisMode;
     userQuestion?: string;
   }): Promise<DocumentAnalysisResult> {
+    const cacheKey = `${payload.documentName}_${payload.mode}_${payload.userQuestion || ''}_${payload.textContent.length}_${payload.textContent.slice(0, 80)}`;
+    const cached = this.docAnalysisCache.get(cacheKey);
+    if (cached && Date.now() - cached.timestamp < this.cacheTtlMs * 2) {
+      return cached.data;
+    }
+
     try {
-      return await this.request<DocumentAnalysisResult>('/documents/analyze', {
+      const result = await this.request<DocumentAnalysisResult>('/documents/analyze', {
         method: 'POST',
         body: JSON.stringify(payload),
       });
+      this.docAnalysisCache.set(cacheKey, { data: result, timestamp: Date.now() });
+      return result;
     } catch (err: any) {
       if (err.message === 'API_HTML_FALLBACK' || err.status === 404 || err.status === 0) {
         const docId = `doc-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`;
-        return buildDocumentAnalysisFallback(
+        const fallback = buildDocumentAnalysisFallback(
           docId,
           payload.documentName,
           payload.textContent,
@@ -451,6 +467,8 @@ class ApiClient {
           payload.userQuestion,
           payload.fileSize
         );
+        this.docAnalysisCache.set(cacheKey, { data: fallback, timestamp: Date.now() });
+        return fallback;
       }
       throw err;
     }
@@ -458,10 +476,15 @@ class ApiClient {
 
   // 4. Cases Management
   async getCases(): Promise<CaseListItem[]> {
+    if (this.casesListCache && Date.now() - this.casesListCache.timestamp < this.cacheTtlMs / 2) {
+      return this.casesListCache.data;
+    }
+
     // If authenticated with Firebase, fetch directly from Firestore
     try {
       const firestoreCases = await firestoreService.getCases();
       if (firestoreCases && firestoreCases.length > 0) {
+        this.casesListCache = { data: firestoreCases, timestamp: Date.now() };
         return firestoreCases;
       }
     } catch (e) {
@@ -469,11 +492,13 @@ class ApiClient {
     }
 
     try {
-      return await this.request<CaseListItem[]>('/cases', {
+      const cases = await this.request<CaseListItem[]>('/cases', {
         method: 'GET',
       });
+      this.casesListCache = { data: cases, timestamp: Date.now() };
+      return cases;
     } catch (err: any) {
-      return [
+      const demoList: CaseListItem[] = [
         {
           id: demoCase.id,
           title: demoCase.title,
@@ -486,14 +511,22 @@ class ApiClient {
           checklistTotalCount: demoCase.evidenceChecklist.length,
         },
       ];
+      this.casesListCache = { data: demoList, timestamp: Date.now() };
+      return demoList;
     }
   }
 
   async getCaseById(caseId: string): Promise<LegalAnalysisResult> {
+    const cached = this.caseCache.get(caseId);
+    if (cached && Date.now() - cached.timestamp < this.cacheTtlMs) {
+      return cached.data;
+    }
+
     // If authenticated with Firebase, fetch directly from Firestore
     try {
       const firestoreCase = await firestoreService.getCaseById(caseId);
       if (firestoreCase) {
+        this.caseCache.set(caseId, { data: firestoreCase, timestamp: Date.now() });
         return firestoreCase;
       }
     } catch (e) {
@@ -501,11 +534,14 @@ class ApiClient {
     }
 
     try {
-      return await this.request<LegalAnalysisResult>(`/cases/${encodeURIComponent(caseId)}`, {
+      const caseItem = await this.request<LegalAnalysisResult>(`/cases/${encodeURIComponent(caseId)}`, {
         method: 'GET',
       });
+      this.caseCache.set(caseId, { data: caseItem, timestamp: Date.now() });
+      return caseItem;
     } catch (err: any) {
       if (caseId === demoCase.id || caseId === 'case-demo-101') {
+        this.caseCache.set(caseId, { data: demoCase, timestamp: Date.now() });
         return demoCase;
       }
       throw err;
@@ -517,6 +553,17 @@ class ApiClient {
     evidenceId: string,
     status: EvidenceStatus
   ): Promise<{ success: boolean; updatedAt: string }> {
+    // Optimistically update cached case if present
+    const cached = this.caseCache.get(caseId);
+    if (cached) {
+      const item = cached.data.evidenceChecklist.find((e) => e.id === evidenceId);
+      if (item) {
+        item.status = status;
+        cached.data.updatedAt = new Date().toISOString();
+      }
+    }
+    this.casesListCache = null;
+
     // Update in Firestore if available
     try {
       await firestoreService.updateEvidenceStatus(caseId, evidenceId, status);
@@ -538,6 +585,9 @@ class ApiClient {
   }
 
   async deleteCase(caseId: string): Promise<{ success: boolean }> {
+    this.caseCache.delete(caseId);
+    this.casesListCache = null;
+
     // Delete in Firestore if available
     try {
       await firestoreService.deleteCase(caseId);

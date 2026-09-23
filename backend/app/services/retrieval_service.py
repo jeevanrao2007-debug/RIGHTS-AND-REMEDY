@@ -30,6 +30,14 @@ class RetrievalResult:
 class LegalRetrievalService:
     def __init__(self):
         self._source_repo = source_repository
+        self._chunk_embeddings: Dict[str, List[float]] = {}
+
+    async def _get_chunk_embedding(self, chunk: LegalChunk) -> List[float]:
+        if chunk.chunk_id in self._chunk_embeddings:
+            return self._chunk_embeddings[chunk.chunk_id]
+        emb = await embedding_service.get_embedding(chunk.text + " " + " ".join(chunk.keywords))
+        self._chunk_embeddings[chunk.chunk_id] = emb
+        return emb
 
     async def retrieve_relevant_sources(
         self,
@@ -72,8 +80,8 @@ class LegalRetrievalService:
             keyword_matches = sum(1 for kw in chunk.keywords if any(term in kw for term in query_terms))
             keyword_score = min(keyword_matches * 0.15, 0.6)
 
-            # Vector similarity
-            chunk_emb = await embedding_service.get_embedding(chunk.text + " " + " ".join(chunk.keywords))
+            # Vector similarity with cached chunk embedding
+            chunk_emb = await self._get_chunk_embedding(chunk)
             sim = cosine_similarity(query_embedding, chunk_emb)
 
             # Combined score

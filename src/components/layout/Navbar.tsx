@@ -50,6 +50,7 @@ export const Navbar: React.FC = () => {
                 key={item.path}
                 to={item.path}
                 id={`nav-link-${item.path.replace('/', '')}`}
+                aria-current={isActive ? 'page' : undefined}
                 className={`flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium transition-colors ${
                   isActive
                     ? 'bg-slate-100 text-slate-900 font-semibold'
@@ -68,8 +69,9 @@ export const Navbar: React.FC = () => {
           <Link
             to="/settings"
             id="nav-user-profile-badge"
-            className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 py-1.5 px-3 text-xs text-slate-700 hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 py-1.5 px-3 text-xs text-slate-700 hover:bg-slate-100 transition-colors focus:ring-2 focus:ring-slate-900 focus:outline-hidden"
             title={user?.email || 'Active session'}
+            aria-label={`User account: ${user?.email || 'Active session'}`}
           >
             <ShieldCheck className="h-4 w-4 text-emerald-600" aria-hidden="true" />
             <span className="max-w-[130px] truncate font-medium sm:inline">
@@ -82,8 +84,8 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Secondary Bar */}
-      <div className="flex md:hidden border-t border-slate-100 bg-slate-50/80 px-2 py-1.5 justify-around">
+      {/* Mobile Navigation Bar with WCAG 44px touch targets */}
+      <nav aria-label="Mobile Navigation" className="flex md:hidden border-t border-slate-100 bg-slate-50/95 px-2 py-1 justify-around">
         {navItems.map((item) => {
           const isActive = location.pathname.startsWith(item.path);
           const Icon = item.icon;
@@ -91,16 +93,18 @@ export const Navbar: React.FC = () => {
             <Link
               key={item.path}
               to={item.path}
-              className={`flex flex-col items-center py-1 px-2 text-[11px] font-medium rounded-sm ${
-                isActive ? 'text-slate-900 font-bold' : 'text-slate-500'
+              aria-label={item.label}
+              aria-current={isActive ? 'page' : undefined}
+              className={`flex flex-col items-center justify-center min-h-[44px] min-w-[48px] px-2 text-[11px] font-medium rounded-md transition-colors ${
+                isActive ? 'text-slate-900 font-bold bg-slate-200/60' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Icon className="h-4 w-4 mb-0.5" />
+              <Icon className="h-4 w-4 mb-0.5" aria-hidden="true" />
               <span>{item.label.split(' ')[0]}</span>
             </Link>
           );
         })}
-      </div>
+      </nav>
     </header>
   );
 };
