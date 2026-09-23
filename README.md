@@ -15,20 +15,6 @@
 
 ---
 
-### AI Evaluation Benchmark Scorecard
-
-| Evaluation Parameter | Score | Key Architecture & Implementation Upgrades |
-| :--- | :---: | :--- |
-| **Efficiency** | **100 / 100** | Initial JS bundle reduced 74% (1,017 kB → 267 kB) via route code-splitting, vendor chunking (`vendor-firebase`, `vendor-lucide`, `legal-engine`), static chunk vector pre-computation, sessionStorage cache for guest sessions, and CDN-cached JSON `/api` endpoints. |
-| **Code Quality** | **100 / 100** | Strict TypeScript schemas, unified Express and FastAPI schemas, strict single `<main id="main-content">` landmark conformance, safe JSON MIME detection, and complete elimination of unhandled HTML interception. |
-| **Security** | **100 / 100** | Verified defense against path traversal, fake binary headers, XSS injection, null-byte input, document prompt injection, and server-side IDOR tenant isolation. |
-| **Testing** | **100 / 100** | 55 automated tests (20 Vitest frontend + 35 Pytest backend: 18 unit/RAG/integration + 17 security), 100% pass rate in <3.0 seconds. |
-| **Accessibility** | **100 / 100** | Single `#main-content` skip navigation link, semantic landmarks (`<header>`, `<main>`, `<footer>`), `aria-live` regions, $\ge 44\text{px}$ touch targets, and color-independent status indicators. |
-| **Problem Statement Alignment** | **100 / 100** | Complete 11-step statutory workflow and 5-stage Remedy Path grounded in authoritative statutory citations. |
-| **Overall** | **100 / 100** | **Comprehensive State-of-the-Art Legal Access Benchmark** |
-
----
-
 ## 1. Problem
 
 Every year, millions of individuals encounter civil legal crises—withheld rental deposits, unexpected workplace termination, unfair debt collections, disputed contractor invoices, or family transitions. 
