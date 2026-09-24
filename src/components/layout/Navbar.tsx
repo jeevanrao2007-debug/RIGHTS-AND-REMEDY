@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
               Rights & Remedy Navigator
             </span>
             <span className="block text-xs font-medium text-slate-500">
-              Legal Information & Action Framework
+              GenAI Legal Information & Assistance
             </span>
           </div>
         </Link>

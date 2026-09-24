@@ -235,8 +235,7 @@ Upon your written request within the thirty-day period, this office will provide
             Analyze Legal Documents & Notices
           </h1>
           <p className="text-sm text-slate-600 max-w-3xl leading-relaxed">
-            Upload lease agreements, employment contracts, dispute letters, or formal notices.
-            Review plain-language explanations, commitments, risks, and questions before signing.
+            Provide PDF, Word (DOCX), TXT, or pasted legal clauses. Use GenAI to simplify complex language, identify obligations, highlight critical clauses, detect potential risks, surface dates and deadlines, find inconsistencies, and ask targeted questions.
           </p>
         </div>
       </header>

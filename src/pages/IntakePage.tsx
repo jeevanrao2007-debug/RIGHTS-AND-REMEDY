@@ -125,7 +125,7 @@ export const IntakePage: React.FC = () => {
           What happened?
         </h1>
         <p className="text-base text-slate-600">
-          Describe your situation in your own words. You don't need to know legal terminology.
+          Describe your situation in your own words. The system extracts relevant facts, asks targeted clarifying questions, explores potentially relevant options, builds an actionable checklist, and helps prepare questions for a lawyer.
         </p>
       </div>
 

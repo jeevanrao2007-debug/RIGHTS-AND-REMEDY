@@ -1,6 +1,6 @@
 {
   "name": "Rights & Remedy Navigator",
-  "description": "Understand your legal situation, explore potentially relevant rights, possible remedies, evidence checklists, verified deadlines, and preparation for legal professionals.",
+  "description": "GenAI-powered legal information and assistance platform that helps users understand legal documents and situations, identify important information, organize evidence, explore possible next steps, and prepare questions for legal professionals.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

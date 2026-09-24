@@ -1,6 +1,6 @@
 {
   "name": "rights-and-remedy-navigator",
-  "description": "Source-grounded AI legal information and decision-support navigator",
+  "description": "GenAI-powered legal information and assistance platform",
   "private": true,
   "version": "1.0.0",
   "type": "module",

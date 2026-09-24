@@ -11,6 +11,10 @@ import {
   Scale,
   Sparkles,
   Lock,
+  Layers,
+  Search,
+  AlertTriangle,
+  FileCheck2,
 } from 'lucide-react';
 import { LegalDisclaimerBanner } from '../components/common/LegalDisclaimerBanner';
 
@@ -28,7 +32,7 @@ export const HomePage: React.FC = () => {
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-800/80 px-3.5 py-1.5 text-xs font-medium text-slate-300 mb-8 backdrop-blur-xs">
             <Scale className="h-3.5 w-3.5 text-emerald-400" aria-hidden="true" />
-            <span>Authoritative Legal Information & Strategy Framework</span>
+            <span>AI for Legal Assistance & Access</span>
           </div>
 
           <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl text-white max-w-4xl mx-auto leading-tight sm:leading-none">
@@ -38,7 +42,7 @@ export const HomePage: React.FC = () => {
           </h1>
 
           <p className="mt-8 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
-            Rights & Remedy Navigator helps you understand legal information, organize relevant facts and evidence, and explore possible next steps based on authoritative sources.
+            Rights & Remedy Navigator helps you understand legal information and documents, identify important facts and clauses, organize evidence, explore possible next steps, and prepare questions for legal professionals.
           </p>
 
           {/* Action CTAs */}
@@ -80,65 +84,228 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Purpose & Value Highlights */}
+      {/* User Journey Flow Section */}
       <section className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-              Purpose-Built Navigation
+              The User Journey
             </h2>
             <p className="mt-2 text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
-              A serious legal information tool, not an open-ended chatbot.
+              From Complex Legal Questions to Practical Next Steps
             </p>
             <p className="mt-3 text-base text-slate-600">
-              Transform unstructured personal or business grievances into structured, actionable legal frameworks backed by statutory authorities.
+              Navigate contracts, leases, policies, and civil legal situations through a clear, structured assistance workflow.
             </p>
           </div>
 
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="rounded-xl border border-slate-200 bg-white p-7 shadow-xs">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100 text-slate-900 mb-5">
-                <Compass className="h-6 w-6" aria-hidden="true" />
+          {/* 6-Step Visual Journey */}
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                  Step 1
+                </span>
+                <BookOpen className="h-5 w-5 text-slate-400" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900">
-                1. Situation Intake & Fact Extraction
+              <h3 className="text-base font-semibold text-slate-900">
+                Understand the Information
               </h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Describe your situation in plain English. The system identifies your jurisdiction, extracts key facts, and asks only essential follow-up questions to resolve ambiguities.
+                Translate dense legal documents into plain English summaries or organize your personal narrative into core established facts.
               </p>
             </div>
 
-            {/* Card 2 */}
-            <div className="rounded-xl border border-slate-200 bg-white p-7 shadow-xs">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100 text-slate-900 mb-5">
-                <Scale className="h-6 w-6" aria-hidden="true" />
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                  Step 2
+                </span>
+                <Search className="h-5 w-5 text-slate-400" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900">
-                2. Rights & Remedy Pathways
+              <h3 className="text-base font-semibold text-slate-900">
+                Identify Facts & Clauses
               </h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Explore potentially relevant rights and actionable remedies. Follow an interactive 5-stage progression from early fact-gathering to negotiation and potential court or agency escalation.
+                Pinpoint mandatory duties, critical terms, unilateral clauses, potential legal risks, deadlines, and internal inconsistencies.
               </p>
             </div>
 
-            {/* Card 3 */}
-            <div className="rounded-xl border border-slate-200 bg-white p-7 shadow-xs">
-              <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-slate-100 text-slate-900 mb-5">
-                <CheckSquare className="h-6 w-6" aria-hidden="true" />
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                  Step 3
+                </span>
+                <HelpCircle className="h-5 w-5 text-slate-400" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900">
-                3. Evidence & Lawyer Preparation
+              <h3 className="text-base font-semibold text-slate-900">
+                Ask Questions & Clarify
               </h3>
               <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Track evidence you have or still need with interactive status toggles. Export tailored questions to maximize every minute of a formal attorney consultation.
+                Query uploaded documents directly with clause citations, or answer 2 to 4 targeted intake questions to resolve missing details.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                  Step 4
+                </span>
+                <Scale className="h-5 w-5 text-slate-400" />
+              </div>
+              <h3 className="text-base font-semibold text-slate-900">
+                Understand Possible Options
+              </h3>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                Explore potentially relevant rights and actionable remedies backed by statutes, with prerequisites and procedural uncertainties stated.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                  Step 5
+                </span>
+                <CheckSquare className="h-5 w-5 text-slate-400" />
+              </div>
+              <h3 className="text-base font-semibold text-slate-900">
+                Generate Actionable Checklist
+              </h3>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                Track evidence you have or still need with interactive status toggles, and review concrete immediate and short-term next steps.
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-xs">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                  Step 6
+                </span>
+                <FileCheck2 className="h-5 w-5 text-slate-400" />
+              </div>
+              <h3 className="text-base font-semibold text-slate-900">
+                Prepare for a Legal Professional
+              </h3>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                Export case-tailored, prioritized questions to maximize every minute and dollar of a formal attorney consultation.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Interactive Pathways Preview */}
+      {/* Two Core Capabilities: Documents + Situations */}
+      <section className="py-16 sm:py-20 bg-white border-b border-slate-200">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Capability 1: Document Intelligence */}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-8 space-y-5 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 rounded-md bg-blue-50 px-3 py-1 text-xs font-bold text-blue-700">
+                  <FileText className="h-4 w-4" />
+                  <span>Document Intelligence</span>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900">
+                  Analyze & Compare Legal Documents
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Provide PDF, Word (DOCX), text files, or pasted contract clauses to extract insights across 7 dedicated analysis modes:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-xs text-slate-700">
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Plain English simplification</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Obligation identification</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Important clause highlights</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Potential risk & trap detection</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Dates, deadlines & notice windows</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Inconsistency & ambiguity check</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <Link
+                  to="/documents"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 hover:text-emerald-600 transition-colors"
+                >
+                  <span>Open Document Review</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Capability 2: Situation Intake & Strategy */}
+            <div className="rounded-2xl border border-slate-200 bg-slate-50/50 p-8 space-y-5 flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 rounded-md bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800">
+                  <Compass className="h-4 w-4" />
+                  <span>Situation Assistance</span>
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900">
+                  Navigate Real-World Legal Problems
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Describe what happened in your own words. The system structures your facts, asks focused clarifying questions, and maps out your possible next steps:
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 text-xs text-slate-700">
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Automated fact extraction</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>2–4 targeted clarifying questions</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Potentially relevant legal rights</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Interactive 5-stage Remedy Path</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Evidence checklist (Have/Need)</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-lg border border-slate-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
+                    <span>Prioritized questions for a lawyer</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <Link
+                  to="/intake"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900 hover:text-emerald-600 transition-colors"
+                >
+                  <span>Start Situation Intake</span>
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Statutory Rigor & Qualified Language Section */}
       <section className="py-16 sm:py-20 bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -151,7 +318,7 @@ export const HomePage: React.FC = () => {
                 No invented dates. No guaranteed outcomes.
               </h2>
               <p className="text-base text-slate-600 leading-relaxed">
-                Legal situations are sensitive and high-stakes. Rights & Remedy Navigator adheres strictly to verified sources. When a deadline is verified by statute (such as security deposit turnaround or agency filing windows), it cites the triggering event. If no deadline is verified, it states so plainly.
+                Legal situations are sensitive and high-stakes. Rights & Remedy Navigator adheres strictly to verified sources and qualified language. When a deadline is verified by statute (such as security deposit turnaround or agency filing windows), it cites the triggering event. If no deadline is verified, it states so plainly.
               </p>
 
               <div className="space-y-3 pt-2">
@@ -176,7 +343,7 @@ export const HomePage: React.FC = () => {
                     ✓
                   </div>
                   <p className="text-sm text-slate-700">
-                    <strong className="font-semibold text-slate-900">Direct Case Management:</strong> Maintain a persistent history of your cases, checklists, and legal briefs.
+                    <strong className="font-semibold text-slate-900">Consultation Preparation:</strong> Prepares focused questions and an organized brief before speaking with licensed legal counsel.
                   </p>
                 </div>
               </div>
